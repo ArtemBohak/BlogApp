@@ -13,8 +13,8 @@ export default (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     req.userId = decodedToken._id;
     next();
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
     return res.status(403).json({ message: "Something went wrong" });
   }
 };
