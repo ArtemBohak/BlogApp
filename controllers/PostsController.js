@@ -1,13 +1,8 @@
-import { validationResult } from "express-validator";
 import Post from "../models/Post.js";
 
-export const create = async (req, res) => {
-  const body = req.body;
+export const create = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
-    }
+    const body = req.body;
     const doc = new Post({
       title: body.title,
       text: body.text,
@@ -71,13 +66,8 @@ export const remove = async (req, res) => {
   }
 };
 
-export const update = async (req, res) => {
+export const update = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
-    }
-
     const body = req.body;
     const postId = req.params.id;
     const post = await Post.findOneAndUpdate(
